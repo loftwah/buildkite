@@ -44,47 +44,6 @@ For Ubuntu 20.04 and above:
 sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent
 ```
 
-## Setting Up Your Rails Application with Docker
-
-Ensure your Rails application has a `Dockerfile` and `docker-compose.yml` for Docker-based development and testing.
-
-### Dockerfile
-
-Here's a basic example of a `Dockerfile` for a Rails application:
-
-```Dockerfile
-FROM ruby:3.2.0
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
-WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
-RUN bundle install
-COPY . /myapp
-CMD ["rails", "server", "-b", "0.0.0.0"]
-```
-
-### docker-compose.yml
-
-An example `docker-compose.yml` to set up Rails and a database:
-
-```yaml
-version: '3'
-services:
-  db:
-    image: postgres
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-  web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/myapp
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-```
-
 ## Buildkite Pipeline Configuration
 
 Create a `.buildkite/pipeline.yml` file in your repository with the following content to define your testing pipeline:
@@ -95,7 +54,7 @@ steps:
     plugins:
       - docker-compose#v3.7.0:
           build: web
-          image-repository: index.docker.io/yourdockerhubusername/myapp
+          image-repository: index.docker.io/yourdockerhubusername/rails
 
   - label: ":ruby: Test"
     plugins:
