@@ -44,27 +44,6 @@ For Ubuntu 20.04 and above:
 sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent
 ```
 
-## Buildkite Pipeline Configuration
-
-Create a `.buildkite/pipeline.yml` file in your repository with the following content to define your testing pipeline:
-
-```yaml
-steps:
-  - label: ":docker: Build"
-    plugins:
-      - docker-compose#v3.7.0:
-          build: web
-          image-repository: index.docker.io/yourdockerhubusername/rails
-
-  - label: ":ruby: Test"
-    plugins:
-      - docker-compose#v3.7.0:
-          run: web
-          command: "bundle exec rake"
-```
-
-Replace `yourdockerhubusername/myapp` with your Docker Hub username and the name of your app.
-
 ## Running Your Pipeline
 
 Commit and push your changes to your repository to trigger a build in Buildkite. Monitor the build's progress and output directly from the Buildkite dashboard.
