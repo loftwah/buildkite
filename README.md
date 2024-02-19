@@ -46,6 +46,8 @@ sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent
 
 ## Running Your Pipeline
 
+Pipeline needs to be set up on Buildkite before running it. The pipeline configuration file is located at `.buildkite/pipeline.yml`. This file contains the steps and commands to be executed by the Buildkite agent.
+
 Commit and push your changes to your repository to trigger a build in Buildkite. Monitor the build's progress and output directly from the Buildkite dashboard.
 
 ## Viewing Logs
@@ -55,6 +57,18 @@ To view the Buildkite agent's logs on your system:
 ```bash
 journalctl -f -u buildkite-agent
 ```
+
+## Running the Pipeline
+
+To run the pipeline locally, use the following command:
+
+```bash
+curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizations/loftwah/pipelines/rails-demo/builds" \
+  -X "POST" \
+  -F "commit=HEAD" \
+  -F "branch=main" \
+  -F "message=First build :rocket:"
+  ```
 
 ## Conclusion
 
