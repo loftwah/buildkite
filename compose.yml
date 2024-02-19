@@ -1,9 +1,15 @@
-version: '3'
+version: '3.8'
+
 services:
-  web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/rails
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rails_demo_app:latest
     ports:
       - "3000:3000"
+    environment:
+      RAILS_ENV: production
+    volumes:
+      - .:/rails
+    command: ["./bin/rails", "server", "-b", "0.0.0.0"]
