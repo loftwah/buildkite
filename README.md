@@ -63,7 +63,7 @@ journalctl -f -u buildkite-agent
 To run the pipeline locally, use the following command:
 
 ```bash
-curl -H "Authorization: Bearer token" "https://api.buildkite.com/v2/organizations/loftwah/pipelines/rails-demo/builds" \
+curl -H "Authorization: Bearer bkua_thisisademokey" "https://api.buildkite.com/v2/organizations/loftwah/pipelines/rails-demo/builds" \
   -X "POST" \
   -F "commit=HEAD" \
   -F "branch=main" \
